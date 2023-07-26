@@ -9,19 +9,27 @@
 /* Begin PBXBuildFile section */
 		E52512562A70168D005CFDCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52512552A70168D005CFDCE /* AppDelegate.swift */; };
 		E52512582A70168D005CFDCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52512572A70168D005CFDCE /* SceneDelegate.swift */; };
-		E525125A2A70168D005CFDCE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52512592A70168D005CFDCE /* ViewController.swift */; };
+		E525125A2A70168D005CFDCE /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52512592A70168D005CFDCE /* PlayerViewController.swift */; };
 		E525125F2A701693005CFDCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E525125E2A701693005CFDCE /* Assets.xcassets */; };
 		E52512622A701693005CFDCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E52512602A701693005CFDCE /* LaunchScreen.storyboard */; };
+		E525126D2A711F21005CFDCE /* MusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525126C2A711F21005CFDCE /* MusicModel.swift */; };
+		E525126F2A711F74005CFDCE /* SongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525126E2A711F74005CFDCE /* SongTableViewCell.swift */; };
+		E52512732A71207F005CFDCE /* Rihanna - MTV VMA Medley (DJ Shine Edit).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E52512712A71207F005CFDCE /* Rihanna - MTV VMA Medley (DJ Shine Edit).mp3 */; };
+		E52512742A71207F005CFDCE /* Rihanna Rude Boy VMA 2016 (DJ Shine Edit).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E52512722A71207F005CFDCE /* Rihanna Rude Boy VMA 2016 (DJ Shine Edit).mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E52512522A70168D005CFDCE /* SoundPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E52512552A70168D005CFDCE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E52512572A70168D005CFDCE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E52512592A70168D005CFDCE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E52512592A70168D005CFDCE /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		E525125E2A701693005CFDCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E52512612A701693005CFDCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E52512632A701693005CFDCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E525126C2A711F21005CFDCE /* MusicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModel.swift; sourceTree = "<group>"; };
+		E525126E2A711F74005CFDCE /* SongTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongTableViewCell.swift; sourceTree = "<group>"; };
+		E52512712A71207F005CFDCE /* Rihanna - MTV VMA Medley (DJ Shine Edit).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Rihanna - MTV VMA Medley (DJ Shine Edit).mp3"; sourceTree = "<group>"; };
+		E52512722A71207F005CFDCE /* Rihanna Rude Boy VMA 2016 (DJ Shine Edit).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Rihanna Rude Boy VMA 2016 (DJ Shine Edit).mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +62,50 @@
 		E52512542A70168D005CFDCE /* SoundPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				E52512702A71206E005CFDCE /* Assets */,
+				E52512632A701693005CFDCE /* Info.plist */,
 				E52512552A70168D005CFDCE /* AppDelegate.swift */,
 				E52512572A70168D005CFDCE /* SceneDelegate.swift */,
-				E52512592A70168D005CFDCE /* ViewController.swift */,
-				E525125E2A701693005CFDCE /* Assets.xcassets */,
-				E52512602A701693005CFDCE /* LaunchScreen.storyboard */,
-				E52512632A701693005CFDCE /* Info.plist */,
+				E52512692A711D7D005CFDCE /* Model */,
+				E525126A2A711D8A005CFDCE /* View */,
+				E525126B2A711D93005CFDCE /* Controller */,
 			);
 			path = SoundPlayer;
+			sourceTree = "<group>";
+		};
+		E52512692A711D7D005CFDCE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E525126C2A711F21005CFDCE /* MusicModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E525126A2A711D8A005CFDCE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E52512602A701693005CFDCE /* LaunchScreen.storyboard */,
+				E525125E2A701693005CFDCE /* Assets.xcassets */,
+				E525126E2A711F74005CFDCE /* SongTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E525126B2A711D93005CFDCE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E52512592A70168D005CFDCE /* PlayerViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E52512702A71206E005CFDCE /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				E52512712A71207F005CFDCE /* Rihanna - MTV VMA Medley (DJ Shine Edit).mp3 */,
+				E52512722A71207F005CFDCE /* Rihanna Rude Boy VMA 2016 (DJ Shine Edit).mp3 */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -123,7 +167,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E52512622A701693005CFDCE /* LaunchScreen.storyboard in Resources */,
+				E52512732A71207F005CFDCE /* Rihanna - MTV VMA Medley (DJ Shine Edit).mp3 in Resources */,
 				E525125F2A701693005CFDCE /* Assets.xcassets in Resources */,
+				E52512742A71207F005CFDCE /* Rihanna Rude Boy VMA 2016 (DJ Shine Edit).mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,7 +180,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E525125A2A70168D005CFDCE /* ViewController.swift in Sources */,
+				E525125A2A70168D005CFDCE /* PlayerViewController.swift in Sources */,
+				E525126D2A711F21005CFDCE /* MusicModel.swift in Sources */,
+				E525126F2A711F74005CFDCE /* SongTableViewCell.swift in Sources */,
 				E52512562A70168D005CFDCE /* AppDelegate.swift in Sources */,
 				E52512582A70168D005CFDCE /* SceneDelegate.swift in Sources */,
 			);
