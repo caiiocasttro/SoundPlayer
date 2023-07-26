@@ -8,9 +8,13 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    //MARK: Proprieties
 
+    //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemPink
         // Do any additional setup after loading the view.
     }
 
