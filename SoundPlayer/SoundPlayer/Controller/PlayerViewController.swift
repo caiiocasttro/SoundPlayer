@@ -170,13 +170,13 @@ class PlayerViewController: UIViewController {
         NSLayoutConstraint.activate([
             
             //Shadow
-            shadow.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            shadow.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             shadow.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             shadow.widthAnchor.constraint(equalToConstant: 350),
             shadow.heightAnchor.constraint(equalToConstant: 350),
             
             //Cover
-            cover.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            cover.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             cover.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             cover.widthAnchor.constraint(equalToConstant: 350),
             cover.heightAnchor.constraint(equalToConstant: 350),

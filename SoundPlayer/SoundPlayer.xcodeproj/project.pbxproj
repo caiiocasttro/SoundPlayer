@@ -16,6 +16,7 @@
 		E525126F2A711F74005CFDCE /* SongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525126E2A711F74005CFDCE /* SongTableViewCell.swift */; };
 		E52512732A71207F005CFDCE /* Rihanna - MTV VMA Medley (DJ Shine Edit).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E52512712A71207F005CFDCE /* Rihanna - MTV VMA Medley (DJ Shine Edit).mp3 */; };
 		E52512742A71207F005CFDCE /* Rihanna Rude Boy VMA 2016 (DJ Shine Edit).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E52512722A71207F005CFDCE /* Rihanna Rude Boy VMA 2016 (DJ Shine Edit).mp3 */; };
+		E52512762A716A68005CFDCE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52512752A716A67005CFDCE /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		E525126E2A711F74005CFDCE /* SongTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongTableViewCell.swift; sourceTree = "<group>"; };
 		E52512712A71207F005CFDCE /* Rihanna - MTV VMA Medley (DJ Shine Edit).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Rihanna - MTV VMA Medley (DJ Shine Edit).mp3"; sourceTree = "<group>"; };
 		E52512722A71207F005CFDCE /* Rihanna Rude Boy VMA 2016 (DJ Shine Edit).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Rihanna Rude Boy VMA 2016 (DJ Shine Edit).mp3"; sourceTree = "<group>"; };
+		E52512752A716A67005CFDCE /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				E52512592A70168D005CFDCE /* PlayerViewController.swift */,
+				E52512752A716A67005CFDCE /* HomeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -185,6 +188,7 @@
 				E525126F2A711F74005CFDCE /* SongTableViewCell.swift in Sources */,
 				E52512562A70168D005CFDCE /* AppDelegate.swift in Sources */,
 				E52512582A70168D005CFDCE /* SceneDelegate.swift in Sources */,
+				E52512762A716A68005CFDCE /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
