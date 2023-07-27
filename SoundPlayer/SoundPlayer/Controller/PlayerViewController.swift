@@ -153,11 +153,16 @@ class PlayerViewController: UIViewController {
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        configurePlayer()
         configureLayout()
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(false)
+        if let player = player {
+            player.stop()
+        }
+    }
     
     //MARK: Configuring layout
     private func configureLayout() {
@@ -260,20 +265,18 @@ class PlayerViewController: UIViewController {
     
     
     //MARK: Configuring player
-    private func configurePlayer() {
+    public func configurePlayer(song name: String) {
         
-        guard let song = titleSong.text else {print("Song not found!")
-            return  }
         
-        let url = Bundle.main.path(forResource: song, ofType: ".mp3")
+        let urlString = Bundle.main.path(forResource: String(name), ofType: ".mp3")
         
         do {
+            
             try AVAudioSession.sharedInstance().setMode(.default)
             try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
             
-            guard let url = url else { print("URL is nil")
+            guard let url = urlString else { print("Something wrong with url")
                 return
-                
             }
             
             player = try AVAudioPlayer(contentsOf: URL(string: url)!)

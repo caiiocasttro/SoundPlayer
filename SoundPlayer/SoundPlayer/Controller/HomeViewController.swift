@@ -81,6 +81,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         vc.image = songs[indexPath.row].image
         vc.music = songs[indexPath.row].title
         vc.singerName = songs[indexPath.row].singer
+        vc.configurePlayer(song: songs[indexPath.row].title)
         vc.sheetPresentationController?.prefersGrabberVisible = true
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true)
