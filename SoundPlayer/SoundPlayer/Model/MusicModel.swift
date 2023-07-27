@@ -10,6 +10,6 @@ import UIKit
 
 struct MusicModel {
     let title: String
-    let image: UIImage
+    let image: String
     let singer: String
 }

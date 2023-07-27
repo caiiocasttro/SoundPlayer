@@ -13,11 +13,35 @@
 // Create the cell
 // Create the viewController
 
+import AVFoundation
 import UIKit
 
 class PlayerViewController: UIViewController {
     
     //MARK: Proprieties
+    var image: String? {
+        didSet {
+            guard let string = image else { return }
+            cover.image = UIImage(named: string)
+        }
+    }
+    
+    var music: String? {
+        didSet {
+            guard let string = music else { return }
+            titleSong.text = string
+        }
+    }
+    
+    var singerName: String? {
+        didSet {
+            guard let string = singerName else { return }
+            singer.text = string
+        }
+    }
+    
+    var player: AVAudioPlayer?
+    
     private var background: UIImageView = {
         let width = UIScreen.main.bounds.size.width
         let height = UIScreen.main.bounds.size.height
@@ -129,6 +153,7 @@ class PlayerViewController: UIViewController {
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        configurePlayer()
         configureLayout()
         // Do any additional setup after loading the view.
     }
@@ -200,7 +225,7 @@ class PlayerViewController: UIViewController {
             progressView.heightAnchor.constraint(equalToConstant: 2),
             
             // Backward button
-            backButton.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 50),
+            backButton.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 80),
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             
             // Play / Pause
@@ -208,11 +233,11 @@ class PlayerViewController: UIViewController {
             playButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             // Forward button
-            nextButton.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 50),
+            nextButton.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 80),
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             
             //Volume image
-            volumeImage.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 50),
+            volumeImage.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 80),
             volumeImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             volumeImage.widthAnchor.constraint(equalToConstant: 15),
             volumeImage.heightAnchor.constraint(equalToConstant: 15),
@@ -223,7 +248,7 @@ class PlayerViewController: UIViewController {
             volumeProgress.trailingAnchor.constraint(equalTo: volumeImageII.leadingAnchor, constant: -5),
             
             //Volume image II
-            volumeImageII.topAnchor.constraint(equalTo: nextButton.bottomAnchor, constant: 50),
+            volumeImageII.topAnchor.constraint(equalTo: nextButton.bottomAnchor, constant: 80),
             volumeImageII.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             volumeImageII.widthAnchor.constraint(equalToConstant: 20),
             volumeImageII.heightAnchor.constraint(equalToConstant: 15)
@@ -233,25 +258,37 @@ class PlayerViewController: UIViewController {
         
     }
     
-}
-
-extension UIImage
-{
-    func scale(newWidth: CGFloat) -> UIImage
-    {
-        guard self.size.width != newWidth else{return self}
+    
+    //MARK: Configuring player
+    private func configurePlayer() {
         
-        let scaleFactor = newWidth / self.size.width
+        guard let song = titleSong.text else {print("Song not found!")
+            return  }
         
-        let newHeight = self.size.height * scaleFactor
-        let newSize = CGSize(width: newWidth, height: newHeight)
+        let url = Bundle.main.path(forResource: song, ofType: ".mp3")
         
-        UIGraphicsBeginImageContextWithOptions(newSize, true, 0.0)
-        self.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+        do {
+            try AVAudioSession.sharedInstance().setMode(.default)
+            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
+            
+            guard let url = url else { print("URL is nil")
+                return
+                
+            }
+            
+            player = try AVAudioPlayer(contentsOf: URL(string: url)!)
+            
+            guard let player = player else { print("Player not found")
+                return
+            }
+            
+            player.volume = 0.5
+            player.play()
+        } catch {
+            print(error.localizedDescription)
+        }
         
-        let newImage: UIImage? = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage ?? self
     }
 }
+
 

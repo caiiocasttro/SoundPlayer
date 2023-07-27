@@ -12,6 +12,27 @@ class SongTableViewCell: UITableViewCell {
     //MARK: Properties
     var identifier = "SongTableViewCell"
     
+    var image: String? {
+        didSet {
+            guard let string = image else { return }
+            cover.image = UIImage(named: string)
+        }
+    }
+    
+    var title: String? {
+        didSet {
+            guard let string = title else { return }
+            titleSong.text = string
+        }
+    }
+    
+    var singerName: String? {
+        didSet {
+            guard let string = singerName else { return }
+            singer.text = string
+        }
+    }
+    
     private lazy var shadow: UIView = {
         let shadow = UIView()
         shadow.layer.shadowColor = UIColor(red: 0.078, green: 0.129, blue: 0.239, alpha: 0.25).cgColor

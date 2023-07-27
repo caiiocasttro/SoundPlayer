@@ -12,6 +12,8 @@ class HomeViewController: UIViewController {
     //MARK: Properties
     var SongTableViewCellIdentifier = "SongTableViewCell"
     
+    var songs: [MusicModel] = []
+    
     private lazy var songsTableView: UITableView = {
         let table = UITableView()
         table.register(SongTableViewCell.self, forCellReuseIdentifier: SongTableViewCellIdentifier)
@@ -23,6 +25,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLayout()
+        configureArray()
         songsTableView.delegate = self
         songsTableView.dataSource = self
         // Do any additional setup after loading the view.
@@ -43,16 +46,26 @@ class HomeViewController: UIViewController {
         
         view.addSubview(songsTableView)
     }
+    
+    //MARK: Adding the songs to the array
+    private func configureArray() {
+        songs.append(contentsOf:
+                        [MusicModel(title: "MTV VMA Medley", image: "cover", singer: "Rihanna"),
+                         MusicModel(title: "Rude Boy VMA 2016", image: "cover", singer: "Rihanna")])
+    }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return songs.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SongTableViewCellIdentifier, for: indexPath) as? SongTableViewCell else {
             return UITableViewCell() }
+        cell.image = songs[indexPath.row].image
+        cell.title = songs[indexPath.row].title
+        cell.singerName = songs[indexPath.row].singer
         
         return cell
     }
@@ -65,6 +78,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let vc = PlayerViewController()
+        vc.image = songs[indexPath.row].image
+        vc.music = songs[indexPath.row].title
+        vc.singerName = songs[indexPath.row].singer
         vc.sheetPresentationController?.prefersGrabberVisible = true
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true)
