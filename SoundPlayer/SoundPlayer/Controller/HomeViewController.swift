@@ -50,8 +50,8 @@ class HomeViewController: UIViewController {
     //MARK: Adding the songs to the array
     private func configureArray() {
         songs.append(contentsOf:
-                        [MusicModel(title: "MTV VMA Medley", image: "cover", singer: "Rihanna"),
-                         MusicModel(title: "Rude Boy VMA 2016", image: "cover", singer: "Rihanna")])
+                        [MusicModel(title: "MTV VMA Medley", image: "cover", singer: "Rihanna", track: "Medley"),
+                         MusicModel(title: "Rude Boy VMA 2016", image: "cover", singer: "Rihanna", track: "RudeBoy")])
     }
 }
 
@@ -81,7 +81,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         vc.image = songs[indexPath.row].image
         vc.music = songs[indexPath.row].title
         vc.singerName = songs[indexPath.row].singer
-        vc.configurePlayer(song: songs[indexPath.row].title)
+        vc.configurePlayer(song: songs[indexPath.row].track)
         vc.sheetPresentationController?.prefersGrabberVisible = true
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true)

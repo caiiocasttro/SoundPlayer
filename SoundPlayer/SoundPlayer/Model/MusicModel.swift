@@ -12,4 +12,5 @@ struct MusicModel {
     let title: String
     let image: String
     let singer: String
+    let track: String
 }

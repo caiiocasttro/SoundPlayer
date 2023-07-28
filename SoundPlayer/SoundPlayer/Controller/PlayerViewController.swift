@@ -106,6 +106,22 @@ class PlayerViewController: UIViewController {
         return view
     }()
     
+    private var duration: UILabel = {
+        let label = UILabel()
+        label.text = "0:00"
+        label.font = .systemFont(ofSize: 10, weight: .regular)
+        label.textColor = UIColor.white
+        return label
+    }()
+    
+    private var currentTime: UILabel = {
+        let label = UILabel()
+        label.text = "0:00"
+        label.font = .systemFont(ofSize: 10, weight: .regular)
+        label.textColor = UIColor.white
+        return label
+    }()
+    
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "backward"), for: .normal)
@@ -176,6 +192,8 @@ class PlayerViewController: UIViewController {
         view.addSubview(singer)
         view.addSubview(plus)
         view.addSubview(progressView)
+        view.addSubview(duration)
+        view.addSubview(currentTime)
         view.addSubview(backButton)
         view.addSubview(playButton)
         view.addSubview(nextButton)
@@ -189,6 +207,8 @@ class PlayerViewController: UIViewController {
         singer.translatesAutoresizingMaskIntoConstraints = false
         plus.translatesAutoresizingMaskIntoConstraints = false
         progressView.translatesAutoresizingMaskIntoConstraints = false
+        duration.translatesAutoresizingMaskIntoConstraints = false
+        currentTime.translatesAutoresizingMaskIntoConstraints = false
         backButton.translatesAutoresizingMaskIntoConstraints = false
         playButton.translatesAutoresizingMaskIntoConstraints = false
         nextButton.translatesAutoresizingMaskIntoConstraints = false
@@ -229,6 +249,14 @@ class PlayerViewController: UIViewController {
             progressView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             progressView.heightAnchor.constraint(equalToConstant: 2),
             
+            //Durantion
+            duration.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5),
+            duration.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            //CurrentTime
+            currentTime.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5),
+            currentTime.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
             // Backward button
             backButton.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 80),
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
@@ -268,7 +296,7 @@ class PlayerViewController: UIViewController {
     public func configurePlayer(song name: String) {
         
         
-        let urlString = Bundle.main.path(forResource: String(name), ofType: ".mp3")
+        let urlString = Bundle.main.path(forResource: name, ofType: ".mp3")
         
         do {
             
@@ -290,6 +318,11 @@ class PlayerViewController: UIViewController {
         } catch {
             print(error.localizedDescription)
         }
+        
+    }
+    
+    //MARK: Buttons action
+    @objc func playDidTapped() {
         
     }
 }
