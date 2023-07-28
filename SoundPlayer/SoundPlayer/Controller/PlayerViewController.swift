@@ -44,6 +44,10 @@ class PlayerViewController: UIViewController {
     
     var currentTimeP: Float = 0.0
     
+    var track: Int = 0
+    
+    var tracks: [MusicModel] = []
+    
     private var background: UIImageView = {
         let width = UIScreen.main.bounds.size.width
         let height = UIScreen.main.bounds.size.height
@@ -143,13 +147,6 @@ class PlayerViewController: UIViewController {
         return button
     }()
     
-    private lazy var volumeImage: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(systemName: "speaker.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(UIColor.systemGray6.withAlphaComponent(0.3))
-//        image.frame = .init(x: 0, y: 0, width: 5, height: 5)
-        return image
-    }()
-    
     private lazy var volumeSlider: UISlider = {
         let slider = UISlider()
         slider.minimumTrackTintColor = UIColor.systemGray6.withAlphaComponent(0.3)
@@ -161,19 +158,14 @@ class PlayerViewController: UIViewController {
         slider.clipsToBounds = true
         return slider
     }()
-    
-    private lazy var volumeImageII: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(systemName: "speaker.wave.3.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(UIColor.systemGray6.withAlphaComponent(0.3))
-//        image.frame = .init(x: 0, y: 0, width: 5, height: 5)
-        return image
-    }()
-    
+
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLayout()
+        configurePlayer()
         configureButton()
+        
         // Do any additional setup after loading the view.
     }
     
@@ -285,13 +277,20 @@ class PlayerViewController: UIViewController {
         // Slider
         volumeSlider.addTarget(self, action: #selector(sliderDidSet), for: .valueChanged)
         
+        //Backward
+        backButton.addTarget(self, action: #selector(backwardDidTapped), for: .touchUpInside)
+        
+        //Forward
+        nextButton.addTarget(self, action: #selector(forwardDidTapped), for: .touchUpInside)
+        
     }
     
     //MARK: Configuring player
-    public func configurePlayer(song name: String) {
+    public func configurePlayer() {
         
+        let song = tracks[track].track
         
-        let urlString = Bundle.main.path(forResource: name, ofType: ".mp3")
+        let urlString = Bundle.main.path(forResource: song, ofType: ".mp3")
         
         do {
             
@@ -312,6 +311,9 @@ class PlayerViewController: UIViewController {
             player.volume = volumeSlider.value
             player.play()
             playButton.isSelected = true
+            let duration = player.duration
+            let currentTime = player.currentTime
+            progressView.setProgress(Float(currentTime) / 60, animated: true)
         } catch {
             print(error.localizedDescription)
         }
@@ -336,6 +338,28 @@ class PlayerViewController: UIViewController {
         let value = slider.value
         player?.volume = value
         
+    }
+    
+    @objc func backwardDidTapped() {
+        
+        if track < 1 {
+            player?.currentTime = 0.0
+            configurePlayer()
+            player?.play()
+            
+        } else {
+            track = 0
+            configurePlayer()
+            player?.play()
+        }
+        
+    }
+    
+    @objc func forwardDidTapped() {
+        if track == 0 {
+            track = track + 1
+            configurePlayer()
+        }
     }
 }
 

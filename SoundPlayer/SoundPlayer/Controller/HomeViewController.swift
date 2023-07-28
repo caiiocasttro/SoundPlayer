@@ -14,6 +14,8 @@ class HomeViewController: UIViewController {
     
     var songs: [MusicModel] = []
     
+    var tracks: [MusicModel] = []
+    
     private lazy var songsTableView: UITableView = {
         let table = UITableView()
         table.register(SongTableViewCell.self, forCellReuseIdentifier: SongTableViewCellIdentifier)
@@ -51,7 +53,13 @@ class HomeViewController: UIViewController {
     private func configureArray() {
         songs.append(contentsOf:
                         [MusicModel(title: "MTV VMA Medley", image: "cover", singer: "Rihanna", track: "Medley"),
-                         MusicModel(title: "Rude Boy VMA 2016", image: "cover", singer: "Rihanna", track: "RudeBoy")])
+                         MusicModel(title: "Rude Boy VMA 2016", image: "cover", singer: "Rihanna", track: "RudeBoy")
+                        ])
+        
+        tracks.append(contentsOf: [
+        MusicModel(title: nil, image: nil, singer: nil, track: "Medley"),
+        MusicModel(title: nil, image: nil, singer: nil, track: "RudeBoy")
+        ])
     }
 }
 
@@ -77,16 +85,16 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
+        let track = indexPath.row
+        
         let vc = PlayerViewController()
         vc.image = songs[indexPath.row].image
         vc.music = songs[indexPath.row].title
-        vc.singerName = songs[indexPath.row].singer
-        vc.configurePlayer(song: songs[indexPath.row].track)
+        vc.track = track
+        vc.tracks = songs
         vc.sheetPresentationController?.prefersGrabberVisible = true
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true)
-        
-        
     }
     
 }

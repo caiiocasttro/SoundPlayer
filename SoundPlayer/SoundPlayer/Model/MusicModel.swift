@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 struct MusicModel {
-    let title: String
-    let image: String
-    let singer: String
-    let track: String
+    let title: String?
+    let image: String?
+    let singer: String?
+    let track: String? 
 }
