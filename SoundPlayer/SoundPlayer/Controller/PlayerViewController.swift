@@ -150,15 +150,16 @@ class PlayerViewController: UIViewController {
         return image
     }()
     
-    private lazy var volumeProgress: UIProgressView = {
-        let progress = UIProgressView()
-        progress.trackTintColor = UIColor.systemGray6.withAlphaComponent(0.3)
-        progress.progressTintColor = UIColor.white
-        progress.progressViewStyle = .bar
-        progress.setProgress(0.5 / 60, animated: true)
-        progress.layer.cornerRadius = 1
-        progress.clipsToBounds = true
-        return progress
+    private lazy var volumeSlider: UISlider = {
+        let slider = UISlider()
+        slider.minimumTrackTintColor = UIColor.systemGray6.withAlphaComponent(0.3)
+        slider.minimumValueImage = UIImage(systemName: "speaker.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(UIColor.systemGray6.withAlphaComponent(0.3))
+        slider.maximumValueImage = UIImage(systemName: "speaker.wave.3.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(UIColor.systemGray6.withAlphaComponent(0.3))
+        slider.tintColor = UIColor.white
+        slider.thumbTintColor = UIColor.clear
+        slider.layer.cornerRadius = 1
+        slider.clipsToBounds = true
+        return slider
     }()
     
     private lazy var volumeImageII: UIImageView = {
@@ -200,9 +201,7 @@ class PlayerViewController: UIViewController {
         view.addSubview(backButton)
         view.addSubview(playButton)
         view.addSubview(nextButton)
-        view.addSubview(volumeImage)
-        view.addSubview(volumeProgress)
-        view.addSubview(volumeImageII)
+        view.addSubview(volumeSlider)
         
         shadow.translatesAutoresizingMaskIntoConstraints = false
         cover.translatesAutoresizingMaskIntoConstraints = false
@@ -215,9 +214,7 @@ class PlayerViewController: UIViewController {
         backButton.translatesAutoresizingMaskIntoConstraints = false
         playButton.translatesAutoresizingMaskIntoConstraints = false
         nextButton.translatesAutoresizingMaskIntoConstraints = false
-        volumeImage.translatesAutoresizingMaskIntoConstraints = false
-        volumeProgress.translatesAutoresizingMaskIntoConstraints = false
-        volumeImageII.translatesAutoresizingMaskIntoConstraints = false
+        volumeSlider.translatesAutoresizingMaskIntoConstraints = false
         
         //Adding constraints
         NSLayoutConstraint.activate([
@@ -231,8 +228,8 @@ class PlayerViewController: UIViewController {
             //Cover
             cover.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             cover.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            cover.widthAnchor.constraint(equalToConstant: 350),
-//            cover.heightAnchor.constraint(equalToConstant: 350),
+            cover.widthAnchor.constraint(equalToConstant: 350),
+            cover.heightAnchor.constraint(equalToConstant: 350),
             
             //Title song
             titleSong.topAnchor.constraint(equalTo: shadow.bottomAnchor, constant: 40),
@@ -272,22 +269,11 @@ class PlayerViewController: UIViewController {
             nextButton.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 80),
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             
-            //Volume image
-            volumeImage.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 80),
-            volumeImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            volumeImage.widthAnchor.constraint(equalToConstant: 15),
-            volumeImage.heightAnchor.constraint(equalToConstant: 15),
-            
             //Volume Progress bar
-            volumeProgress.centerYAnchor.constraint(equalTo: volumeImage.centerYAnchor),
-            volumeProgress.leadingAnchor.constraint(equalTo: volumeImage.trailingAnchor, constant: 5),
-            volumeProgress.trailingAnchor.constraint(equalTo: volumeImageII.leadingAnchor, constant: -5),
+            volumeSlider.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 80),
+            volumeSlider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            volumeSlider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
             
-            //Volume image II
-            volumeImageII.topAnchor.constraint(equalTo: nextButton.bottomAnchor, constant: 80),
-            volumeImageII.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            volumeImageII.widthAnchor.constraint(equalToConstant: 20),
-            volumeImageII.heightAnchor.constraint(equalToConstant: 15)
         ])
     }
     
@@ -295,6 +281,9 @@ class PlayerViewController: UIViewController {
         
         //Play button
         playButton.addTarget(self, action: #selector(playDidTapped), for: .touchUpInside)
+        
+        // Slider
+        volumeSlider.addTarget(self, action: #selector(sliderDidSet), for: .valueChanged)
         
     }
     
@@ -319,7 +308,8 @@ class PlayerViewController: UIViewController {
                 return
             }
             
-            player.volume = 0.5
+            volumeSlider.value = 0.5
+            player.volume = volumeSlider.value
             player.play()
             playButton.isSelected = true
         } catch {
@@ -339,6 +329,12 @@ class PlayerViewController: UIViewController {
             playButton.isSelected = true
             
         }
+        
+    }
+    
+    @objc func sliderDidSet(_ slider: UISlider) {
+        let value = slider.value
+        player?.volume = value
         
     }
 }
