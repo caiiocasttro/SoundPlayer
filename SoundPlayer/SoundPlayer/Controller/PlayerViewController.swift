@@ -42,6 +42,8 @@ class PlayerViewController: UIViewController {
     
     var player: AVAudioPlayer?
     
+    var currentTimeP: Float = 0.0
+    
     private var background: UIImageView = {
         let width = UIScreen.main.bounds.size.width
         let height = UIScreen.main.bounds.size.height
@@ -100,7 +102,7 @@ class PlayerViewController: UIViewController {
         view.trackTintColor = UIColor.systemGray6.withAlphaComponent(0.3)
         view.progressTintColor = UIColor.white
         view.progressViewStyle = .bar
-        view.setProgress(0.5 / 60, animated: true)
+        view.setProgress( 0.5 / 60, animated: true)
         view.layer.cornerRadius = 1
         view.clipsToBounds = true
         return view
@@ -170,6 +172,7 @@ class PlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLayout()
+        configureButton()
         // Do any additional setup after loading the view.
     }
     
@@ -228,8 +231,8 @@ class PlayerViewController: UIViewController {
             //Cover
             cover.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             cover.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            cover.widthAnchor.constraint(equalToConstant: 350),
-            cover.heightAnchor.constraint(equalToConstant: 350),
+//            cover.widthAnchor.constraint(equalToConstant: 350),
+//            cover.heightAnchor.constraint(equalToConstant: 350),
             
             //Title song
             titleSong.topAnchor.constraint(equalTo: shadow.bottomAnchor, constant: 40),
@@ -285,12 +288,15 @@ class PlayerViewController: UIViewController {
             volumeImageII.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             volumeImageII.widthAnchor.constraint(equalToConstant: 20),
             volumeImageII.heightAnchor.constraint(equalToConstant: 15)
-            
-            
         ])
-        
     }
     
+    private func configureButton() {
+        
+        //Play button
+        playButton.addTarget(self, action: #selector(playDidTapped), for: .touchUpInside)
+        
+    }
     
     //MARK: Configuring player
     public func configurePlayer(song name: String) {
@@ -315,6 +321,7 @@ class PlayerViewController: UIViewController {
             
             player.volume = 0.5
             player.play()
+            playButton.isSelected = true
         } catch {
             print(error.localizedDescription)
         }
@@ -323,6 +330,15 @@ class PlayerViewController: UIViewController {
     
     //MARK: Buttons action
     @objc func playDidTapped() {
+        
+        if player?.isPlaying == true {
+            player?.pause()
+            playButton.isSelected = false
+        } else {
+            player?.play()
+            playButton.isSelected = true
+            
+        }
         
     }
 }
