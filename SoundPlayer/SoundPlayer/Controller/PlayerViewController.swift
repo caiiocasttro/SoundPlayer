@@ -42,7 +42,7 @@ class PlayerViewController: UIViewController {
     
     var player: AVAudioPlayer?
     
-    var currentTimeP: Float = 0.0
+    var timer: Timer?
     
     var track: Int = 0
     
@@ -106,13 +106,12 @@ class PlayerViewController: UIViewController {
         view.trackTintColor = UIColor.systemGray6.withAlphaComponent(0.3)
         view.progressTintColor = UIColor.white
         view.progressViewStyle = .bar
-        view.setProgress( 0.5 / 60, animated: true)
         view.layer.cornerRadius = 1
         view.clipsToBounds = true
         return view
     }()
     
-    private var duration: UILabel = {
+    private var currentTime: UILabel = {
         let label = UILabel()
         label.text = "0:00"
         label.font = .systemFont(ofSize: 10, weight: .regular)
@@ -120,7 +119,7 @@ class PlayerViewController: UIViewController {
         return label
     }()
     
-    private var currentTime: UILabel = {
+    private var duration: UILabel = {
         let label = UILabel()
         label.text = "0:00"
         label.font = .systemFont(ofSize: 10, weight: .regular)
@@ -149,7 +148,7 @@ class PlayerViewController: UIViewController {
     
     private lazy var volumeSlider: UISlider = {
         let slider = UISlider()
-        slider.minimumTrackTintColor = UIColor.systemGray6.withAlphaComponent(0.3)
+        slider.minimumTrackTintColor = UIColor.systemGray6.withAlphaComponent(0.5)
         slider.minimumValueImage = UIImage(systemName: "speaker.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(UIColor.systemGray6.withAlphaComponent(0.3))
         slider.maximumValueImage = UIImage(systemName: "speaker.wave.3.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(UIColor.systemGray6.withAlphaComponent(0.3))
         slider.tintColor = UIColor.white
@@ -165,6 +164,7 @@ class PlayerViewController: UIViewController {
         configureLayout()
         configurePlayer()
         configureButton()
+//        player?.delegate = self
         
         // Do any additional setup after loading the view.
     }
@@ -188,8 +188,8 @@ class PlayerViewController: UIViewController {
         view.addSubview(singer)
         view.addSubview(plus)
         view.addSubview(progressView)
-        view.addSubview(duration)
         view.addSubview(currentTime)
+        view.addSubview(duration)
         view.addSubview(backButton)
         view.addSubview(playButton)
         view.addSubview(nextButton)
@@ -201,8 +201,8 @@ class PlayerViewController: UIViewController {
         singer.translatesAutoresizingMaskIntoConstraints = false
         plus.translatesAutoresizingMaskIntoConstraints = false
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        duration.translatesAutoresizingMaskIntoConstraints = false
         currentTime.translatesAutoresizingMaskIntoConstraints = false
+        duration.translatesAutoresizingMaskIntoConstraints = false
         backButton.translatesAutoresizingMaskIntoConstraints = false
         playButton.translatesAutoresizingMaskIntoConstraints = false
         nextButton.translatesAutoresizingMaskIntoConstraints = false
@@ -242,12 +242,12 @@ class PlayerViewController: UIViewController {
             progressView.heightAnchor.constraint(equalToConstant: 2),
             
             //Durantion
-            duration.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5),
-            duration.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            currentTime.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5),
+            currentTime.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             
             //CurrentTime
-            currentTime.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5),
-            currentTime.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            duration.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5),
+            duration.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
             // Backward button
             backButton.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 80),
@@ -311,11 +311,37 @@ class PlayerViewController: UIViewController {
             player.volume = volumeSlider.value
             player.play()
             playButton.isSelected = true
+            
+            
+            
+            self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(configureCurrentTime), userInfo: nil, repeats: true)
+            
+            
             let duration = player.duration
-            let currentTime = player.currentTime
-            progressView.setProgress(Float(currentTime) / 60, animated: true)
+            let minutes = Int(duration / 60)
+            let seconds = Int(duration.truncatingRemainder(dividingBy: 60))
+            
+            self.duration.text = String(format: "%02d:%02d", minutes, seconds)
         } catch {
             print(error.localizedDescription)
+        }
+        
+    }
+    
+    //MARK: Configuring currentTime
+    @objc func configureCurrentTime() {
+        guard let player = self.player else { return }
+        
+        let currentTime = player.currentTime
+        let duration = player.duration
+
+        let minutes = Int(currentTime / 60)
+        let seconds = Int(currentTime.truncatingRemainder(dividingBy: 60))
+        if duration > 0 {
+            let progress = Float(currentTime / duration)
+            progressView.setProgress(progress, animated: true)
+            self.currentTime.text = String(format: "%02d:%02d", minutes, seconds)
+            print(progress)
         }
         
     }
@@ -362,5 +388,4 @@ class PlayerViewController: UIViewController {
         }
     }
 }
-
 
