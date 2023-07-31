@@ -20,4 +20,5 @@ The application was developed with two songs and one image for the cover of both
 
 ### 📸 Screenshots of the application
  
-![SoundPlayer screenshots](https://github.com/caiiocasttro/SoundPlayer/assets/104564732/0e86e219-3af4-4bc8-a3b6-fe4daa6e5bd9)
+![SoundPlayer screenshots](https://github.com/caiiocasttro/SoundPlayer/assets/104564732/e67ec155-cb37-4373-a6f4-0a03250050d9)
+
